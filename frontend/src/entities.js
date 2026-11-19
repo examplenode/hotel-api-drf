@@ -27,7 +27,7 @@ export const entities = reactive({
       { name: 'first_name', label: 'Имя', required: true, maxlength: 100 },
       { name: 'last_name', label: 'Фамилия', required: true, maxlength: 100 },
       { name: 'email', label: 'Email', type: 'email', required: true },
-      { name: 'phone', label: 'Телефон', type: 'tel', maxlength: 20, pattern: '\\+?[0-9 ()-]+' },
+      { name: 'phone', label: 'Телефон', type: 'tel', maxlength: 20, pattern: '\\+?[0-9 \\(\\)\\-]+' },
     ],
   },
 
