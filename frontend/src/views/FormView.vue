@@ -6,13 +6,12 @@ import { entities, loadOptions } from '../entities'
 
 const route = useRoute()
 const router = useRouter()
-const { entity: name, id } = route.params // id есть только при редактировании
+const { entity: name, id } = route.params
 const entity = entities[name]
 
-// пустая форма со значениями по умолчанию
 const form = ref(Object.fromEntries(entity.fields.map((f) => [f.name, f.default ?? ''])))
-const errors = ref({}) // ошибки полей от API: { email: ['...'] }
-const error = ref('') // общая ошибка
+const errors = ref({})
+const error = ref('')
 
 async function load() {
   try {

@@ -25,5 +25,4 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'password')
 
     def create(self, validated_data):
-        # create_user хэширует пароль перед сохранением в базу
         return User.objects.create_user(**validated_data)

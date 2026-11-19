@@ -1,12 +1,10 @@
 import { reactive } from 'vue'
 
-// Состояние авторизации, берём из localStorage, чтобы вход сохранялся после перезагрузки
 export const auth = reactive({
   token: localStorage.getItem('access'),
   username: localStorage.getItem('username'),
 })
 
-// Всплывающее уведомление
 export const toast = reactive({ text: '', error: false })
 let timer
 export function notify(text, error = false) {
@@ -16,7 +14,6 @@ export function notify(text, error = false) {
   timer = setTimeout(() => (toast.text = ''), 3000)
 }
 
-// Общая функция для запросов к API
 export async function api(url, method = 'GET', body = null, retry = true) {
   const headers = { 'Content-Type': 'application/json' }
   if (auth.token) headers.Authorization = 'Bearer ' + auth.token
@@ -27,7 +24,6 @@ export async function api(url, method = 'GET', body = null, retry = true) {
     body: body ? JSON.stringify(body) : null,
   })
 
-  // access-токен истёк: получаем новый по refresh-токену и повторяем запрос
   if (res.status === 401 && auth.token && retry) {
     if (await refreshToken()) return api(url, method, body, false)
     logout()
@@ -39,7 +35,6 @@ export async function api(url, method = 'GET', body = null, retry = true) {
   return data
 }
 
-// Загружает все страницы списка (API отдаёт по 10 записей)
 export async function getAll(name) {
   let items = []
   for (let page = 1; ; page++) {
@@ -76,8 +71,6 @@ export function logout() {
   auth.username = null
 }
 
-// Превращает ответ с ошибкой от DRF в текст
-// Пример ответа: { "detail": "..." } или { "email": ["Это поле обязательно."] }
 export function errorText(err) {
   if (err instanceof Error) return 'Не удалось связаться с сервером'
   return Object.entries(err)

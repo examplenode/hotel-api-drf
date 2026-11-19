@@ -33,16 +33,15 @@ async function submit() {
     <form @submit.prevent="submit">
       <label>
         Логин
-        <input v-model.trim="form.username" required maxlength="150" autocomplete="username" />
+        <input v-model.trim="form.username" required maxlength="150" />
       </label>
       <label v-if="isRegister">
         Email
-        <input v-model.trim="form.email" type="email" autocomplete="email" />
+        <input v-model.trim="form.email" type="email" />
       </label>
       <label>
         Пароль
-        <input v-model="form.password" type="password" required :minlength="isRegister ? 8 : null"
-          autocomplete="current-password" />
+        <input v-model="form.password" type="password" required :minlength="isRegister ? 8 : null" />
       </label>
 
       <p v-if="error" class="alert">{{ error }}</p>

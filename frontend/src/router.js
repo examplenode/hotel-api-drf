@@ -12,7 +12,6 @@ const router = createRouter({
   routes: [
     { path: '/', redirect: '/rooms' },
     { path: '/login', component: LoginView },
-    // meta.auth — страница доступна только после входа
     { path: `/${entity}`, component: ListView, meta: { auth: true } },
     { path: `/${entity}/new`, component: FormView, meta: { auth: true } },
     { path: `/${entity}/:id(\\d+)`, component: DetailView, meta: { auth: true } },
@@ -21,7 +20,6 @@ const router = createRouter({
   ],
 })
 
-// Перед каждым переходом: если страница защищена, а токена нет — отправляем на вход
 router.beforeEach((to) => {
   if (to.meta.auth && !auth.token) {
     return { path: '/login', query: { next: to.fullPath } }

@@ -28,7 +28,6 @@ function onLogout() {
   </header>
 
   <main class="container">
-    <!-- key заставляет страницу заново загрузиться при смене адреса -->
     <RouterView :key="$route.fullPath" />
   </main>
 

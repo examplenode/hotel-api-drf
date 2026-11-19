@@ -1,9 +1,6 @@
 import { reactive } from 'vue'
 import { getAll } from './api'
 
-// Описание моделей API: какие поля есть и как их показывать.
-// Страницы списка, просмотра и формы общие для всех трёх моделей и берут поля отсюда.
-// reactive нужен, чтобы страница обновилась, когда загрузятся варианты для выпадающих списков.
 export const entities = reactive({
   rooms: {
     title: 'Номера',
@@ -44,12 +41,10 @@ export const entities = reactive({
         options: [['PENDING', 'Ожидает'], ['CONFIRMED', 'Подтверждено'], ['CANCELLED', 'Отменено']],
       },
     ],
-    // проверка, которую нельзя сделать атрибутами input
     validate: (b) => (b.check_out <= b.check_in ? 'Дата выезда должна быть позже даты заезда' : ''),
   },
 })
 
-// Для полей-связей (номер, гость) загружает варианты выбора из API
 export async function loadOptions(entity) {
   for (const field of entity.fields) {
     if (field.from) {
@@ -59,7 +54,6 @@ export async function loadOptions(entity) {
   }
 }
 
-// Значение поля в читаемом виде
 export function display(field, value) {
   if (field.type === 'checkbox') return value ? 'Да' : 'Нет'
   const option = field.options?.find(([v]) => v === value)

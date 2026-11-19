@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.db.models import ProtectedError
 from rest_framework import viewsets, permissions, generics
@@ -8,8 +7,6 @@ from .serializers import RoomSerializer, GuestSerializer, BookingSerializer, Reg
 
 
 class ProtectedDeleteMixin:
-    # Номер или гостя нельзя удалить, пока на них есть брони (on_delete=PROTECT).
-    # Вместо ошибки 500 возвращаем 400 с понятным текстом.
     def perform_destroy(self, instance):
         try:
             instance.delete()
@@ -18,7 +15,6 @@ class ProtectedDeleteMixin:
 
 
 class IsAdminOrReadOnly(permissions.BasePermission):
-    # Клиент может только смотреть номера, менять их может только админ
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return request.user.is_authenticated
